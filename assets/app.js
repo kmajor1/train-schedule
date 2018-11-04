@@ -1,4 +1,4 @@
-// Initialize Firebase
+// set Firebase config 
 var config = {
     apiKey: "AIzaSyDkKRcvX2zVoxzwZHHFpiDPxh5s6JWiGx8",
     authDomain: "train-schedule-d207a.firebaseapp.com",
@@ -7,60 +7,42 @@ var config = {
     storageBucket: "train-schedule-d207a.appspot.com",
     messagingSenderId: "608051141696"
 };
+// initialize firebase app 
 firebase.initializeApp(config);
 
-// load database function into variable 
-var database = firebase.database(); 
-console.log(database);
-//train list ref
+// load database object 
+var database = firebase.database();
+// load train schedule ref on train db 
 var trainListRef = database.ref();
-console.log(trainListRef);
-// trainListRef.set({
-//     trainName: "name",
-//     trainTime: 100
-// })
+// object reference for pushing data to train list reference 
+var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq) {
+    trainListRef.push({
+        name: trainName,
+        destination: trainDest,
+        startTime: trainFirstTime,
+        frequency: trainFreq
+    })
+}
 
-// trainListRef.set({
-//     trainName: "name2",
-//     trainTime: 200 
-// });
+// onclick event handler for "add train" button 
 
-// trainListRef.set( {
-//     trainName: "name3",
-//     trainTime: 300,
-//     trainRoute: "test"
-// });
-
-var trainListRef2 = database.ref();
-console.log(trainListRef2);
-
-
-// push a new child on button click 
-
-    document.getElementById("addData").onclick = function () {
-        trainListRef2.push({
-            name: "lakeshore west",
-            time: 500 
-        });
-    }
-  
+document.getElementById("submitNewTrain").onsubmit = function (event) {
+    // store user input 
+    var trainNameInput = document.getElementById("inputTrainName").value; 
+    var trainDestInput = document.getElementById("inputTrainDestination").value; 
+    var trainStartInput = document.getElementById("inputFirstTrainTime").value; 
+    var trainFreqInput = document.getElementById("inputTrainFrequency").value;
+    // call function to push to db 
+    addTrain(trainNameInput, trainDestInput, trainStartInput, trainFreqInput);
+}
 
 
 
 
-    trainListRef2.on('child_added', function (snapshot) {
-        var newDiv = document.createElement("div");
-        console.log(snapshot.val());
-        var data = snapshot.val();
-        var newDivText = data.name; 
-        console.log("test");
-        console.log("text is:" + newDivText);
-        newDiv.innerHTML = newDivText; 
-        var stuff = document.getElementById("stuff");
-        console.log(stuff);
-        stuff.appendChild(newDiv);
-        // document.getElementById("body").append(newDiv);
-        // document.getElementById("body").append(newDiv);
-    });
+
+// child_added handler
+trainListRef.on('child_added', function (snapshot) {
+    console.log(snapshot.val());
+});
 
 

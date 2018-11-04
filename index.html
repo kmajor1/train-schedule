@@ -43,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <form>
+                <form id="submitNewTrain">
                     <div class="form-group">
                         <label for="inputTrainName">Train Name</label>
                         <input class="form-control" id="inputTrainName" type="text">
@@ -54,17 +54,16 @@
                     </div>
                     <div class="form-group">
                         <label for="inputFirstTrainTime">First Train Time (HH:MM)</label>
-                        <input class="form-control" type="time">
+                        <input id="inputFirstTrainTime" class="form-control" type="time">
                     </div>
                     <div class="form-group">
                         <label for="inputTrainFrequency">Train Frequency (min)</label>
-                        <input class="form-control" type="number">
+                        <input id="inputTrainFrequency" class="form-control" type="number">
                     </div>
                     <button class="btn btn-primary" id="addTrain">Add train</button>
                 </form>
             </div>
         </div>
-
     </div>
 
     <script src="./assets/app.js"></script>

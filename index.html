@@ -6,31 +6,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Train Scheduler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/style.css" />
     <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
-    
+
 </head>
 
 <body>
-    <div>
-        <button id="addData">My Button</button>
-    </div>
-    <div id="container">
+
+    <div class="container">
+        <header>
+            <h1>Go Train!</h1>
+        </header>
         <div class="row">
-            <table class="table" id="trainList">
-                <thead>
-                    <th>Train Name</th>
-                    <th>Destination</th>
-                    <th>Frequency (Min)</th>
-                    <th>Next Arrival</th>
-                    <th>Minutes Away</th>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div class="col">
+                <table class="table" id="trainList">
+                    <thead>
+                        <th>Train Name</th>
+                        <th>Destination</th>
+                        <th>Frequency (Min)</th>
+                        <th>Next Arrival</th>
+                        <th>Minutes Away</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lakeshore West</td>
+                            <td>Oakville</td>
+                            <td>45 min</td>
+                            <td>3:45pm</td>
+                            <td>10 mins</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="form-group">
+                        <label for="inputTrainName">Train Name</label>
+                        <input class="form-control" id="inputTrainName" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTrainDestination">Train Destination</label>
+                        <input class="form-control" id="inputTrainDestination" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputFirstTrainTime">First Train Time (HH:MM)</label>
+                        <input class="form-control" type="time">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputTrainFrequency">Train Frequency (min)</label>
+                        <input class="form-control" type="number">
+                    </div>
+                    <button class="btn btn-primary" id="addTrain">Add train</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 
     <script src="./assets/app.js"></script>

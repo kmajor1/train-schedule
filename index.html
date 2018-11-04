@@ -4,16 +4,34 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Train Scheduler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/style.css" />
 
     <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
-    <script src="./assets/app.js"></script>
+    
 </head>
 
 <body>
+    <div>
+        <button id="addData">My Button</button>
+    </div>
+    <div id="container">
+        <div class="row">
+            <table id="trainList">
+                <thead>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency (Min)</th>
+                    <th>Next Arrival</th>
+                    <th>Minutes Away</th>
+                </thead>
+            </table>
+        </div>
+        
+    </div>
 
+    <script src="./assets/app.js"></script>
 </body>
 
 </html>

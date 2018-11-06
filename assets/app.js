@@ -17,26 +17,24 @@ var trainTimeStamp;
 var database = firebase.database();
 // load train schedule ref on train db 
 var trainListRef = database.ref();
-// object reference for pushing data to train list reference 
+// function for pushing data to train list reference 
 var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq, unixStartTime) {
     console.log("values passed were: ");
     console.log(trainName + " " + trainDest + " "+ trainFirstTime + " " + trainFreq + " " + unixStartTime); 
     trainListRef.push({
         name: trainName,
         destination: trainDest,
-        startTime: trainFirstTime,
         frequency: trainFreq,
+        startTime: trainFirstTime,
         startTimeStamp: unixStartTime
     })
 }
 
-// test add train 
-var trainName = "some name"; 
-var trainDest = "somewhere";
-var trainFirstTime = moment().hours('15').minutes('15').format();
-var trainFreq = '12';
-var unixStartTime = moment().hours('15').minutes('15').format('x');
-addTrain(trainName, trainDest, trainFirstTime, trainFreq, unixStartTime); 
+// functions for calculating the next train time and minutes until arrival 
+var nextArrival = function () {
+
+}
+
 // onclick event handler for "add train" button 
 
 document.getElementById("submitNewTrain").onsubmit = function (event) {
@@ -59,6 +57,22 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
 // child_added handler
 trainListRef.on('child_added', function (snapshot) {
     console.log(snapshot.val());
+    // grab table object 
+    var scheduleTable = document.getElementById("trainList");
+    var scheduleTableNewRow = scheduleTable.insertRow();
+    var nextTrainInterval = 
+    
+    // array of objects? 
+    var trainList = [snapshot.val().name, snapshot.val().destination, snapshot.val().frequency];
+    for (var i = 0; i < (trainList.length); i++) {
+        var scheduleTableNewCell = scheduleTableNewRow.insertCell();
+        scheduleTableNewCell.innerHTML = trainList[i];
+    }
+
+    
+
+    // call next time function 
+    // call next arrival function 
 });
 
 

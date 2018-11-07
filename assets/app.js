@@ -31,7 +31,22 @@ var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq, unixSt
 }
 
 // functions for calculating the next train time and minutes until arrival 
-var nextArrival = function () {
+var nextArrival = function (trainFirstTime, freq) {
+    // get time until 
+    freq = freq*60*1000; 
+    var currentT = moment(); 
+    var diff =  currentT.diff(parseInt(trainFirstTime));
+    console.log('the diff is:');
+    console.log(diff);
+    var tRemainder = diff % freq;
+    console.log('the remainder is');
+    console.log(tRemainder);
+    var tmsToTrain = (freq - tRemainder); 
+    var tMtoTrain = moment.duration(tmsToTrain).humanize(true);
+    console.log('time to next train is:'+ tMtoTrain);
+    var tNext = moment().add(tmsToTrain, 'ms');
+    console.log(tNext.format("hh:mm"));
+    var tTimes = [tRemainder, tNext.format("hh:mm")];
 
 }
 
@@ -46,9 +61,9 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
     var hours = trainStartInput.substring(0,2);
     var minutes  = trainStartInput.substring(3,5);
     // convert to moment time 
-    var trainStart = moment().hour(hours).minutes(minutes).seconds('00').format(); 
+    var trainStart = moment().hour(hours).minutes(minutes).seconds(0).format(); 
     // store in unix timestamp 
-    var trainStartUnix = moment().hour(hours).minutes(minutes).seconds('00').format('x');
+    var trainStartUnix = moment().hour(hours).minutes(minutes).seconds(0).format('x');
     
     // call function to push to db 
     addTrain(trainNameInput, trainDestInput, trainStart, trainFreqInput, trainStartUnix);
@@ -60,13 +75,14 @@ trainListRef.on('child_added', function (snapshot) {
     // grab table object 
     var scheduleTable = document.getElementById("trainList");
     var scheduleTableNewRow = scheduleTable.insertRow();
-    var nextTrainInterval = 
+    
     
     // array of objects? 
     var trainList = [snapshot.val().name, snapshot.val().destination, snapshot.val().frequency];
     for (var i = 0; i < (trainList.length); i++) {
         var scheduleTableNewCell = scheduleTableNewRow.insertCell();
         scheduleTableNewCell.innerHTML = trainList[i];
+        nextArrival(snapshot.val().startTimeStamp, snapshot.val().frequency);
     }
 
     
@@ -75,4 +91,5 @@ trainListRef.on('child_added', function (snapshot) {
     // call next arrival function 
 });
 
-
+var t = (moment().diff(moment(1541448900748)));
+var t2 = t % (10*60*1000);

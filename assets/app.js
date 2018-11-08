@@ -14,6 +14,21 @@ firebase.initializeApp(config);
 var database = firebase.database();
 // load train schedule ref on train db 
 var trainListRef = database.ref();
+// loader function 
+function loader (state) {
+    if (state == 'off') {
+        // get loader div 
+        var dataDiv = document.getElementById('dataDiv');
+        dataDiv.className = "col"; 
+        // hide loader 
+        var loaderDiv = document.getElementById('loaderDiv');
+        loaderDiv.className = "d-none";
+    }
+    else {
+        
+    }
+
+}
 // function for pushing data to train list reference 
 var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq) {
     console.log("values passed were: ");
@@ -60,6 +75,8 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
 
 // child_added handler
 trainListRef.on('child_added', function (snapshot) {
+    // call loader
+    
     console.log(snapshot.val());
     // grab table object 
     var scheduleTable = document.getElementById("trainList");
@@ -77,6 +94,8 @@ trainListRef.on('child_added', function (snapshot) {
         var scheduleTableNewCell = scheduleTableNewRow.insertCell();
         scheduleTableNewCell.innerHTML = trainList[i];
     }
+
+    loader('off');
 
 
     

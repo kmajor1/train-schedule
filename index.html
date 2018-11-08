@@ -19,9 +19,11 @@
     <div class="container">
         <header>
             <h1>Go Train!</h1>
+            <h4>Sick of the train never being on time? Make up your own times!</h4>
         </header>
-        <div class="row">
-            <div class="col">
+        <div id="dataHolder" class="row justify-content-center">
+            <div id="loaderDiv" class="loader"></div>
+            <div id="dataDiv" class="col d-none">
                 <table class="table" id="trainList">
                     <thead>
                         <th>Train Name</th>

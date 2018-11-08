@@ -8,3 +8,7 @@ header {
     color: darkgreen; 
 }
 
+label {
+    font-weight: bold; 
+}
+

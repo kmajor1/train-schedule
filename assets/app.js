@@ -34,10 +34,12 @@ var nextArrival = function (trainFirstTime, tFrequency) {
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
     var tRemainder = diffTime % tFrequency;
     var tMinutesTillTrain = tFrequency - tRemainder;
-    var nextTrain = moment().add(tMinutesTillTrain);
+    alert(tMinutesTillTrain);
+    var nextTrain = moment().add(tMinutesTillTrain, 'minutes');
     nextTrain = nextTrain.format("HH:mm");
-    tMinutesTillTrainDuration = moment.duration(tMinutesTillTrain, 'minutes').humanize(true);
-    var tTimes = [nextTrain, tMinutesTillTrainDuration];
+    alert(nextTrain);
+    tMinutesTillTrainHuman = moment.duration(tMinutesTillTrain, 'minutes').humanize(true);
+    var tTimes = [nextTrain, tMinutesTillTrainHuman];
     return tTimes;
 
 }

@@ -1,4 +1,10 @@
 body {
-    font-size: 10pt; 
+    font-size: 12pt; 
+    
+}
+
+header {
+    text-align: center; 
+    color: darkgreen; 
 }
 

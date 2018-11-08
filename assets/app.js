@@ -1,5 +1,10 @@
 // set Firebase config 
 var isLoaded = false; 
+// timer to turn off loader 
+setTimeout(() => {
+    isLoaded = true; 
+    loader('off');
+}, 2500);
 var config = {
     apiKey: "AIzaSyDkKRcvX2zVoxzwZHHFpiDPxh5s6JWiGx8",
     authDomain: "train-schedule-d207a.firebaseapp.com",
@@ -17,7 +22,8 @@ var database = firebase.database();
 var trainListRef = database.ref();
 // loader function 
 function loader (state) {
-    if (state == 'off' && !isLoaded) {
+    
+    if (state == 'off' && isLoaded) {
         // get loader div 
         var dataDiv = document.getElementById('dataDiv');
         dataDiv.className = "col"; 
@@ -29,7 +35,7 @@ function loader (state) {
         submitDiv.className = "col-3";
         isLoaded = true; 
     }
-    else if (state == 'on' && isLoaded) {
+    else if (state == 'on' && !isLoaded) {
         var dataDiv = document.getElementById('dataDiv');
         dataDiv.className = "d-none"; 
         // hide loader 
@@ -40,6 +46,9 @@ function loader (state) {
         submitDiv.className = "d-none";
         isLoaded = false; 
         
+    }
+    else {
+        return 
     }
 
 }
@@ -74,6 +83,9 @@ var nextArrival = function (trainFirstTime, tFrequency) {
 // onclick event handler for "add train" button 
 
 document.getElementById("submitNewTrain").onsubmit = function (event) {
+    // isloaded make false 
+    isLoaded = false; 
+    loader('on');
     // store user input 
     var trainNameInput = document.getElementById("inputTrainName").value;
     var trainDestInput = document.getElementById("inputTrainDestination").value;
@@ -89,8 +101,6 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
 
 // child_added handler
 trainListRef.on('child_added', function (snapshot) {
-    // call loader
-    loader('on');
     console.log(snapshot.val());
     // grab table object 
     var scheduleTable = document.getElementById("trainList");
@@ -108,13 +118,17 @@ trainListRef.on('child_added', function (snapshot) {
         var scheduleTableNewCell = scheduleTableNewRow.insertCell();
         scheduleTableNewCell.innerHTML = trainList[i];
     }
-
-
+    isLoaded = true; 
     loader('off');
+
+
+    
 
 
 
     
 
 });
+
+
 

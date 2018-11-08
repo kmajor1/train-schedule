@@ -10,47 +10,35 @@ var config = {
 // initialize firebase app 
 firebase.initializeApp(config);
 
-// global train time variable 
-var trainTimeStamp;
-
 // load database object 
 var database = firebase.database();
 // load train schedule ref on train db 
 var trainListRef = database.ref();
 // function for pushing data to train list reference 
-var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq, unixStartTime) {
+var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq) {
     console.log("values passed were: ");
-    console.log(trainName + " " + trainDest + " " + trainFirstTime + " " + trainFreq + " " + unixStartTime);
     trainListRef.push({
         name: trainName,
         destination: trainDest,
         frequency: trainFreq,
-        startTime: trainFirstTime,
-        startTimeStamp: unixStartTime
+        startTime: trainFirstTime
     })
 }
 
 // functions for calculating the next train time and minutes until arrival 
-var nextArrival = function (trainFirstTime, freq) {
+var nextArrival = function (trainFirstTime, tFrequency) {
     // get time until 
-    freq = freq * 60 * 1000;
+    // freq = freq * 60 * 1000;
     var currentT = moment();
-    var diff = currentT.diff(parseInt(trainFirstTime));
-    console.log('the diff is:');
-    console.log(diff);
-    var tRemainder = diff % freq;
-    console.log('the remainder is');
-    console.log(tRemainder);
-    var tmsToTrain = (freq - tRemainder);
-    var tMtoTrain = moment.duration(tmsToTrain).humanize(true);
-    console.log('time to next train is:' + tMtoTrain);
-    var tNext = moment().add(tmsToTrain, 'ms');
-    tNext = tNext.format("HH:MM");
-    var tTimes = [tNext, tMtoTrain];
-    console.log('the return value of this function is:');
-    console.log(tNext);
-    console.log(tMtoTrain);
-    console.log(tTimes);
+    var firstTimeConverted = moment(trainFirstTime, "hh:mm").subtract(1, "years");
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    var tRemainder = diffTime % tFrequency;
+    var tMinutesTillTrain = tFrequency - tRemainder;
+    tMinutesTillTrainDuration = moment.duration(tMinutesTillTrain, 'minutes').humanize(true);
+    // var tMtoTrain = moment.duration(tmsToTrain).humanize(true);
+    var nextTrain = moment().add(tMinutesTillTrain);
+    nextTrain = nextTrain.format("HH:mm");
+    var tTimes = [nextTrain, tMinutesTillTrain];
     return tTimes;
 
 }
@@ -63,15 +51,12 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
     var trainDestInput = document.getElementById("inputTrainDestination").value;
     var trainStartInput = document.getElementById("inputFirstTrainTime").value;
     var trainFreqInput = document.getElementById("inputTrainFrequency").value;
-    var hours = trainStartInput.substring(0, 2);
-    var minutes = trainStartInput.substring(3, 5);
+    // var hours = trainStartInput.substring(0, 2);
+    // var minutes = trainStartInput.substring(3, 5);
     // convert to moment time 
-    var trainStart = moment().hour(hours).minutes(minutes).seconds(0).format();
-    // store in unix timestamp 
-    var trainStartUnix = moment().hour(hours).minutes(minutes).seconds(0).format('x');
-
+    var trainStart = moment(trainStartInput, "hh:mm").subtract(1, 'years').format();   
     // call function to push to db 
-    addTrain(trainNameInput, trainDestInput, trainStart, trainFreqInput, trainStartUnix);
+    addTrain(trainNameInput, trainDestInput, trainStart, trainFreqInput);
 }
 
 // child_added handler
@@ -85,7 +70,7 @@ trainListRef.on('child_added', function (snapshot) {
     // array of objects? 
     var trainList = [snapshot.val().name, snapshot.val().destination, snapshot.val().frequency];
     var tTimes;
-    tTimes = nextArrival(snapshot.val().startTimeStamp, snapshot.val().frequency);
+    tTimes = nextArrival(snapshot.val().startTime, snapshot.val().frequency);
     trainList = trainList.concat(tTimes);
     console.log('train list array'); 
     console.log(trainList);
@@ -95,10 +80,7 @@ trainListRef.on('child_added', function (snapshot) {
     }
 
 
+    
 
-    // call next time function 
-    // call next arrival function 
 });
 
-var t = (moment().diff(moment(1541448900748)));
-var t2 = t % (10 * 60 * 1000);

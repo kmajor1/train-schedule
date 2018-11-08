@@ -17,13 +17,36 @@
 <body>
 
     <div class="container">
-        <header>
-            <h1>Go Train!</h1>
-            <h4>Sick of the train never being on time? Make up your own times!</h4>
-        </header>
+        <header class="mb-5 mt-2"><h1>Go Train</h1></header>
+        
         <div id="dataHolder" class="row justify-content-center">
             <div id="loaderDiv" class="loader"></div>
-            <div id="dataDiv" class="col d-none">
+            <div id="submitDiv" class="col-3 d-none">
+                <header><h4>Add a train</h4></header>
+                    <form id="submitNewTrain">
+                        <div class="form-group">
+                            <label for="inputTrainName">Train Name</label>
+                            <input class="form-control" id="inputTrainName" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTrainDestination">Train Destination</label>
+                            <input class="form-control" id="inputTrainDestination" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFirstTrainTime">First Train Time (HH:MM)</label>
+                            <input id="inputFirstTrainTime" class="form-control" type="time">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTrainFrequency">Train Frequency (min)</label>
+                            <input id="inputTrainFrequency" class="form-control" type="number">
+                        </div>
+                        <button class="btn btn-primary" id="addTrain">Add train</button>
+                    </form>
+                </div>
+            <div id="dataDiv" class="col-9 d-none">
+                    <header>
+                            <h4>Train Schedule</h4>
+                        </header>
                 <table class="table" id="trainList">
                     <thead>
                         <th>Train Name</th>
@@ -35,29 +58,6 @@
                     <tbody>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <form id="submitNewTrain">
-                    <div class="form-group">
-                        <label for="inputTrainName">Train Name</label>
-                        <input class="form-control" id="inputTrainName" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTrainDestination">Train Destination</label>
-                        <input class="form-control" id="inputTrainDestination" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputFirstTrainTime">First Train Time (HH:MM)</label>
-                        <input id="inputFirstTrainTime" class="form-control" type="time">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTrainFrequency">Train Frequency (min)</label>
-                        <input id="inputTrainFrequency" class="form-control" type="number">
-                    </div>
-                    <button class="btn btn-primary" id="addTrain">Add train</button>
-                </form>
             </div>
         </div>
     </div>

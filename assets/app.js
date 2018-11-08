@@ -1,4 +1,5 @@
 // set Firebase config 
+var isLoaded = false; 
 var config = {
     apiKey: "AIzaSyDkKRcvX2zVoxzwZHHFpiDPxh5s6JWiGx8",
     authDomain: "train-schedule-d207a.firebaseapp.com",
@@ -16,15 +17,28 @@ var database = firebase.database();
 var trainListRef = database.ref();
 // loader function 
 function loader (state) {
-    if (state == 'off') {
+    if (state == 'off' && !isLoaded) {
         // get loader div 
         var dataDiv = document.getElementById('dataDiv');
         dataDiv.className = "col"; 
         // hide loader 
         var loaderDiv = document.getElementById('loaderDiv');
         loaderDiv.className = "d-none";
+        // submit div get 
+        var submitDiv = document.getElementById('submitDiv');
+        submitDiv.className = "col-3";
+        isLoaded = true; 
     }
-    else {
+    else if (state == 'on' && isLoaded) {
+        var dataDiv = document.getElementById('dataDiv');
+        dataDiv.className = "d-none"; 
+        // hide loader 
+        var loaderDiv = document.getElementById('loaderDiv');
+        loaderDiv.className = "loader";
+        // submit div get 
+        var submitDiv = document.getElementById('submitDiv');
+        submitDiv.className = "d-none";
+        isLoaded = false; 
         
     }
 
@@ -76,7 +90,7 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
 // child_added handler
 trainListRef.on('child_added', function (snapshot) {
     // call loader
-    
+    loader('on');
     console.log(snapshot.val());
     // grab table object 
     var scheduleTable = document.getElementById("trainList");
@@ -95,7 +109,9 @@ trainListRef.on('child_added', function (snapshot) {
         scheduleTableNewCell.innerHTML = trainList[i];
     }
 
+
     loader('off');
+
 
 
     

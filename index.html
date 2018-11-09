@@ -17,26 +17,13 @@
 <body>
 
     <div class="container">
-        <header>
-            <h1>Go Train!</h1>
-        </header>
         <div class="row">
-            <div class="col">
-                <table class="table" id="trainList">
-                    <thead>
-                        <th>Train Name</th>
-                        <th>Destination</th>
-                        <th>Frequency (Min)</th>
-                        <th>Next Arrival</th>
-                        <th>Minutes Away</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+            <header>
+                <h1>Go Train!</h1>
+            </header>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-3">
                 <form id="submitNewTrain">
                     <div class="form-group">
                         <label for="inputTrainName">Train Name</label>
@@ -57,8 +44,24 @@
                     <button class="btn btn-primary" id="addTrain">Add train</button>
                 </form>
             </div>
+            <div class="col-lg-9">
+                    <table class="table" id="trainList">
+                        <thead>
+                            <th>Train Name</th>
+                            <th>Destination</th>
+                            <th>Frequency (Min)</th>
+                            <th>Next Arrival</th>
+                            <th>Minutes Away</th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
+        
+        
+
 
     <script src="./assets/app.js"></script>
 </body>

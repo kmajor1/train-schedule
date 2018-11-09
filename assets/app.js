@@ -78,8 +78,5 @@ trainListRef.on('child_added', function (snapshot) {
         scheduleTableNewCell.innerHTML = trainList[i];
     }
 
-
-    
-
 });
 

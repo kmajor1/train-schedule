@@ -1,4 +1,10 @@
 // set Firebase config 
+var isLoaded = false; 
+// timer to turn off loader 
+setTimeout(() => {
+    isLoaded = true; 
+    loader('off');
+}, 2500);
 var config = {
     apiKey: "AIzaSyDkKRcvX2zVoxzwZHHFpiDPxh5s6JWiGx8",
     authDomain: "train-schedule-d207a.firebaseapp.com",
@@ -14,6 +20,38 @@ firebase.initializeApp(config);
 var database = firebase.database();
 // load train schedule ref on train db 
 var trainListRef = database.ref();
+// loader function 
+function loader (state) {
+    
+    if (state == 'off' && isLoaded) {
+        // get loader div 
+        var dataDiv = document.getElementById('dataDiv');
+        dataDiv.className = "col"; 
+        // hide loader 
+        var loaderDiv = document.getElementById('loaderDiv');
+        loaderDiv.className = "d-none";
+        // submit div get 
+        var submitDiv = document.getElementById('submitDiv');
+        submitDiv.className = "col-3";
+        isLoaded = true; 
+    }
+    else if (state == 'on' && !isLoaded) {
+        var dataDiv = document.getElementById('dataDiv');
+        dataDiv.className = "d-none"; 
+        // hide loader 
+        var loaderDiv = document.getElementById('loaderDiv');
+        loaderDiv.className = "loader";
+        // submit div get 
+        var submitDiv = document.getElementById('submitDiv');
+        submitDiv.className = "d-none";
+        isLoaded = false; 
+        
+    }
+    else {
+        return 
+    }
+
+}
 // function for pushing data to train list reference 
 var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq) {
     console.log("values passed were: ");
@@ -45,6 +83,9 @@ var nextArrival = function (trainFirstTime, tFrequency) {
 // onclick event handler for "add train" button 
 
 document.getElementById("submitNewTrain").onsubmit = function (event) {
+    // isloaded make false 
+    isLoaded = false; 
+    loader('on');
     // store user input 
     var trainNameInput = document.getElementById("inputTrainName").value;
     var trainDestInput = document.getElementById("inputTrainDestination").value;
@@ -77,6 +118,14 @@ trainListRef.on('child_added', function (snapshot) {
         var scheduleTableNewCell = scheduleTableNewRow.insertCell();
         scheduleTableNewCell.innerHTML = trainList[i];
     }
+    isLoaded = true; 
+    loader('off');
+
+
+    
+
 
 });
+
+
 

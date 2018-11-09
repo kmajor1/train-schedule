@@ -17,51 +17,50 @@
 <body>
 
     <div class="container">
-        <div class="row">
-            <header>
-                <h1>Go Train!</h1>
-            </header>
-        </div>
-        <div class="row">
-            <div class="col-lg-3">
-                <form id="submitNewTrain">
-                    <div class="form-group">
-                        <label for="inputTrainName">Train Name</label>
-                        <input class="form-control" id="inputTrainName" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTrainDestination">Train Destination</label>
-                        <input class="form-control" id="inputTrainDestination" type="text">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputFirstTrainTime">First Train Time (HH:MM)</label>
-                        <input id="inputFirstTrainTime" class="form-control" type="time">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTrainFrequency">Train Frequency (min)</label>
-                        <input id="inputTrainFrequency" class="form-control" type="number">
-                    </div>
-                    <button class="btn btn-primary" id="addTrain">Add train</button>
-                </form>
-            </div>
-            <div class="col-lg-9">
-                    <table class="table" id="trainList">
-                        <thead>
-                            <th>Train Name</th>
-                            <th>Destination</th>
-                            <th>Frequency (Min)</th>
-                            <th>Next Arrival</th>
-                            <th>Minutes Away</th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+        <header class="mb-5 mt-2"><h1>Go Train</h1></header>
+        
+        <div id="dataHolder" class="row justify-content-center">
+            <div id="loaderDiv" class="loader"></div>
+            <div id="submitDiv" class="col-3 d-none">
+                <header><h4>Add a train</h4></header>
+                    <form id="submitNewTrain">
+                        <div class="form-group">
+                            <label for="inputTrainName">Train Name</label>
+                            <input class="form-control" id="inputTrainName" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTrainDestination">Train Destination</label>
+                            <input class="form-control" id="inputTrainDestination" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFirstTrainTime">First Train Time (HH:MM)</label>
+                            <input id="inputFirstTrainTime" class="form-control" type="time">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTrainFrequency">Train Frequency (min)</label>
+                            <input id="inputTrainFrequency" class="form-control" type="number">
+                        </div>
+                        <button class="btn btn-primary" id="addTrain">Add train</button>
+                    </form>
                 </div>
+            <div id="dataDiv" class="col-9 d-none">
+                    <header>
+                            <h4>Train Schedule</h4>
+                        </header>
+                <table class="table" id="trainList">
+                    <thead>
+                        <th>Train Name</th>
+                        <th>Destination</th>
+                        <th>Frequency (Min)</th>
+                        <th>Next Arrival</th>
+                        <th>Minutes Away</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
-        
-        
-
+    </div>
 
     <script src="./assets/app.js"></script>
 </body>

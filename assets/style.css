@@ -4,7 +4,7 @@ body {
 }
 
 header {
-    text-align: center; 
+    text-align: left; 
     color: darkgreen; 
 }
 
@@ -12,8 +12,20 @@ label {
     font-weight: bold; 
 }
 
-#spacer {
-    height: 50px; 
-    
+.loader {
+    width: 120px;
+    height: 120px; 
+    border-radius: 50%; 
+    border: 16px solid lightgray; 
+    border-top: 16px solid blue; 
+    animation-name: spin;
+    animation-duration: 2s; 
+    animation-timing-function: linear; 
+    animation-iteration-count: infinite; 
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
 }
 

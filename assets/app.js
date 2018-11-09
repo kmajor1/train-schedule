@@ -91,8 +91,7 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
     var trainDestInput = document.getElementById("inputTrainDestination").value;
     var trainStartInput = document.getElementById("inputFirstTrainTime").value;
     var trainFreqInput = document.getElementById("inputTrainFrequency").value;
-    // var hours = trainStartInput.substring(0, 2);
-    // var minutes = trainStartInput.substring(3, 5);
+    
     // convert to moment time 
     var trainStart = moment(trainStartInput, "hh:mm").subtract(1, 'years').format();   
     // call function to push to db 
@@ -101,6 +100,7 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
 
 // child_added handler
 trainListRef.on('child_added', function (snapshot) {
+    loader('on');
     console.log(snapshot.val());
     // grab table object 
     var scheduleTable = document.getElementById("trainList");
@@ -118,8 +118,8 @@ trainListRef.on('child_added', function (snapshot) {
         var scheduleTableNewCell = scheduleTableNewRow.insertCell();
         scheduleTableNewCell.innerHTML = trainList[i];
     }
-    isLoaded = true; 
-    loader('off');
+    
+    
 
 
     

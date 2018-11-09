@@ -26,13 +26,13 @@ function loader (state) {
     if (state == 'off' && isLoaded) {
         // get loader div 
         var dataDiv = document.getElementById('dataDiv');
-        dataDiv.className = "col"; 
+        dataDiv.className = "col-lg-9"; 
         // hide loader 
         var loaderDiv = document.getElementById('loaderDiv');
         loaderDiv.className = "d-none";
         // submit div get 
         var submitDiv = document.getElementById('submitDiv');
-        submitDiv.className = "col-3";
+        submitDiv.className = "col-lg-3 mb-3";
         isLoaded = true; 
     }
     else if (state == 'on' && !isLoaded) {

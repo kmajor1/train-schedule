@@ -1,4 +1,4 @@
-body {
+html {
     font-size: 12pt; 
     
 }
@@ -6,6 +6,7 @@ body {
 header {
     text-align: left; 
     color: darkgreen; 
+    font-weight: bold; 
 }
 
 label {

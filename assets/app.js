@@ -65,15 +65,23 @@ var addTrain = function (trainName, trainDest, trainFirstTime, trainFreq) {
 
 // functions for calculating the next train time and minutes until arrival 
 var nextArrival = function (trainFirstTime, tFrequency) {
-    // get time until 
-    // freq = freq * 60 * 1000;
-    var currentT = moment();
-    var firstTimeConverted = moment(trainFirstTime, "hh:mm").subtract(1, "years");
-    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    var diffTime = moment().diff(moment(trainFirstTime), "minutes");
     var tRemainder = diffTime % tFrequency;
     var tMinutesTillTrain = tFrequency - tRemainder;
-    var nextTrain = moment().add(tMinutesTillTrain, 'minutes');
-    nextTrain = nextTrain.format("HH:mm");
+    // check if first train entered is in future or not 
+    var isFirstTrainInPast = moment(trainFirstTime).isBefore(moment());
+    var nextTrain; 
+    
+    if (isFirstTrainInPast) {
+        nextTrain = moment().add(tMinutesTillTrain, 'minutes');
+        nextTrain = nextTrain.format("HH:mm");
+        
+    }
+    else {
+        nextTrain = moment(trainFirstTime).format("HH:mm");
+        tMinutesTillTrain = moment(trainFirstTime).diff(moment(), 'minutes');
+    }
+    // convert minutes till next train to a duration, then humanize it 
     tMinutesTillTrainHuman = moment.duration(tMinutesTillTrain, 'minutes').humanize(true);
     var tTimes = [nextTrain, tMinutesTillTrainHuman];
     return tTimes;
@@ -91,17 +99,20 @@ document.getElementById("submitNewTrain").onsubmit = function (event) {
     var trainDestInput = document.getElementById("inputTrainDestination").value;
     var trainStartInput = document.getElementById("inputFirstTrainTime").value;
     var trainFreqInput = document.getElementById("inputTrainFrequency").value;
-    
+    var hours = trainStartInput.substring(0,2);
+    var minutes = trainStartInput.substring(3,5);
     // convert to moment time 
-    var trainStart = moment(trainStartInput, "hh:mm").subtract(1, 'years').format();   
+    var trainStart = moment().hours(hours).minutes(minutes).seconds(0).format(); 
     // call function to push to db 
     addTrain(trainNameInput, trainDestInput, trainStart, trainFreqInput);
 }
 
 // child_added handler
 trainListRef.on('child_added', function (snapshot) {
+    alert('child_added_fired');
     loader('on');
-    console.log(snapshot.val());
+    //log the data snapshot
+    // console.log(snapshot.val());
     // grab table object 
     var scheduleTable = document.getElementById("trainList");
     var scheduleTableNewRow = scheduleTable.insertRow();
@@ -112,8 +123,8 @@ trainListRef.on('child_added', function (snapshot) {
     var tTimes;
     tTimes = nextArrival(snapshot.val().startTime, snapshot.val().frequency);
     trainList = trainList.concat(tTimes);
-    console.log('train list array'); 
-    console.log(trainList);
+    // console.log('train list array'); 
+    // console.log(trainList);
     for (var i = 0; i < (trainList.length); i++) {
         var scheduleTableNewCell = scheduleTableNewRow.insertCell();
         scheduleTableNewCell.innerHTML = trainList[i];
